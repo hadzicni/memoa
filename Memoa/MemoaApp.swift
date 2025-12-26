@@ -9,10 +9,12 @@ import SwiftUI
 
 @main
 struct MemoaApp: App {
+    @State private var diaryStore = DiaryStore()
 
     var body: some Scene {
         WindowGroup {
             ContentView()
+                .environment(diaryStore)
         }
     }
 }

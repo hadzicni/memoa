@@ -7,37 +7,27 @@
 
 import SwiftUI
 
-struct TabView: View {
-    @State private var searchText = ""
-
+struct MainTabView: View {
+    @AppStorage("appearanceMode") private var appearanceMode: AppearanceMode = .system
+    
     var body: some View {
         SwiftUI.TabView {
-
-            SwiftUI.Tab("Summary", systemImage: "heart") {
-                NavigationStack {
-                    Text("Summary")
-                        .navigationTitle("Summary")
-                }
+            SwiftUI.Tab("Entries", systemImage: "book.fill") {
+                EntriesListView()
             }
 
-            SwiftUI.Tab("Sharing", systemImage: "person.2.fill") {
-                NavigationStack {
-                    Text("Sharing")
-                        .navigationTitle("Sharing")
-                }
+            SwiftUI.Tab("Calendar", systemImage: "calendar") {
+                CalendarView()
             }
 
             SwiftUI.Tab("Search", systemImage: "magnifyingglass", role: .search) {
-                NavigationStack {
-                    Text("Search")
-                        .navigationTitle("Search")
-                        .searchable(text: $searchText)
-                }
+                SearchView()
+            }
+            
+            SwiftUI.Tab("Settings", systemImage: "gearshape.fill") {
+                SettingsView()
             }
         }
-        .tabBarMinimizeBehavior(.onScrollDown)
-        .tabViewBottomAccessory {
-            Text("Bottom Accessory")
-        }
+        .preferredColorScheme(appearanceMode.colorScheme)
     }
 }
