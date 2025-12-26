@@ -17,7 +17,7 @@ struct DiaryEntry: Identifiable, Codable {
     var photoData: [Data]?
     var audioData: Data?
     var audioDuration: TimeInterval?
-    
+
     enum Mood: String, Codable, CaseIterable {
         case happy = "😊"
         case neutral = "😐"
@@ -25,7 +25,7 @@ struct DiaryEntry: Identifiable, Codable {
         case excited = "🤩"
         case anxious = "😰"
         case calm = "😌"
-        
+
         var name: String {
             switch self {
             case .happy: return "Happy"
@@ -37,7 +37,7 @@ struct DiaryEntry: Identifiable, Codable {
             }
         }
     }
-    
+
     var hasMedia: Bool {
         (photoData?.isEmpty == false) || audioData != nil
     }

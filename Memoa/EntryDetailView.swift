@@ -10,20 +10,20 @@ import SwiftUI
 struct EntryDetailView: View {
     @Environment(DiaryStore.self) private var store
     let entry: DiaryEntry
-    
+
     @State private var isEditing = false
     @State private var editedTitle: String
     @State private var editedContent: String
     @State private var editedMood: DiaryEntry.Mood
     @State private var audioPlayer = AudioPlayer()
-    
+
     init(entry: DiaryEntry) {
         self.entry = entry
         _editedTitle = State(initialValue: entry.title)
         _editedContent = State(initialValue: entry.content)
         _editedMood = State(initialValue: entry.mood)
     }
-    
+
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 16) {
@@ -39,14 +39,14 @@ struct EntryDetailView: View {
                                 .font(.title)
                                 .bold()
                         }
-                        
+
                         Text(entry.date.formatted(date: .long, time: .shortened))
                             .font(.subheadline)
                             .foregroundStyle(.secondary)
                     }
-                    
+
                     Spacer()
-                    
+
                     if isEditing {
                         Picker("Mood", selection: $editedMood) {
                             ForEach(DiaryEntry.Mood.allCases, id: \.self) { mood in
@@ -64,9 +64,9 @@ struct EntryDetailView: View {
                         }
                     }
                 }
-                
+
                 Divider()
-                
+
                 // Photos
                 if let photoData = entry.photoData, !photoData.isEmpty, !isEditing {
                     ScrollView(.horizontal, showsIndicators: false) {
@@ -83,7 +83,7 @@ struct EntryDetailView: View {
                         }
                     }
                 }
-                
+
                 // Audio Player
                 if let audioData = entry.audioData, !isEditing {
                     VStack(spacing: 12) {
@@ -98,15 +98,15 @@ struct EntryDetailView: View {
                                 Image(systemName: audioPlayer.isPlaying ? "pause.circle.fill" : "play.circle.fill")
                                     .font(.system(size: 50))
                             }
-                            
+
                             VStack(alignment: .leading, spacing: 4) {
                                 Text(formatTime(audioPlayer.currentTime))
                                     .font(.system(.body, design: .monospaced))
                                     .foregroundStyle(.secondary)
-                                
+
                                 ProgressView(value: audioPlayer.currentTime, total: audioPlayer.duration)
                                     .tint(.blue)
-                                
+
                                 Text(formatTime(audioPlayer.duration))
                                     .font(.system(.caption, design: .monospaced))
                                     .foregroundStyle(.tertiary)
@@ -120,7 +120,7 @@ struct EntryDetailView: View {
                         audioPlayer.loadAudio(data: audioData)
                     }
                 }
-                
+
                 // Content
                 if isEditing {
                     TextEditor(text: $editedContent)
@@ -132,7 +132,7 @@ struct EntryDetailView: View {
                     Text(entry.content)
                         .font(.body)
                 }
-                
+
                 Spacer()
             }
             .padding()
@@ -149,7 +149,7 @@ struct EntryDetailView: View {
             }
         }
     }
-    
+
     private func saveChanges() {
         var updatedEntry = entry
         updatedEntry.title = editedTitle
@@ -157,7 +157,7 @@ struct EntryDetailView: View {
         updatedEntry.mood = editedMood
         store.updateEntry(updatedEntry)
     }
-    
+
     private func formatTime(_ time: TimeInterval) -> String {
         let minutes = Int(time) / 60
         let seconds = Int(time) % 60

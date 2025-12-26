@@ -10,7 +10,7 @@ import SwiftUI
 struct SearchView: View {
     @Environment(DiaryStore.self) private var store
     @State private var searchText = ""
-    
+
     var filteredEntries: [DiaryEntry] {
         if searchText.isEmpty {
             return store.sortedEntries
@@ -21,7 +21,7 @@ struct SearchView: View {
             }
         }
     }
-    
+
     var body: some View {
         NavigationStack {
             List {

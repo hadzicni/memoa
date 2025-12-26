@@ -11,7 +11,7 @@ import PhotosUI
 struct AddEntryView: View {
     @Environment(DiaryStore.self) private var store
     @Environment(\.dismiss) private var dismiss
-    
+
     @State private var title = ""
     @State private var content = ""
     @State private var selectedMood: DiaryEntry.Mood = .neutral
@@ -20,16 +20,16 @@ struct AddEntryView: View {
     @State private var photoData: [Data] = []
     @State private var audioRecorder = AudioRecorder()
     @State private var showingAudioRecorder = false
-    
+
     var body: some View {
         NavigationStack {
             Form {
                 Section("Entry Details") {
                     TextField("Title", text: $title)
-                    
+
                     DatePicker("Date", selection: $date, displayedComponents: [.date, .hourAndMinute])
                 }
-                
+
                 Section("Mood") {
                     LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible()), GridItem(.flexible())], spacing: 12) {
                         ForEach(DiaryEntry.Mood.allCases, id: \.self) { mood in
@@ -58,12 +58,12 @@ struct AddEntryView: View {
                         }
                     }
                 }
-                
+
                 Section("Your Thoughts") {
                     TextEditor(text: $content)
                         .frame(minHeight: 200)
                 }
-                
+
                 Section("Attachments") {
                     PhotosPicker(selection: $selectedPhotos, maxSelectionCount: 5, matching: .images) {
                         Label("Add Photos", systemImage: "photo.on.rectangle")
@@ -78,7 +78,7 @@ struct AddEntryView: View {
                             }
                         }
                     }
-                    
+
                     if !photoData.isEmpty {
                         ScrollView(.horizontal, showsIndicators: false) {
                             HStack(spacing: 12) {
@@ -106,7 +106,7 @@ struct AddEntryView: View {
                             .padding(.vertical, 8)
                         }
                     }
-                    
+
                     Button {
                         showingAudioRecorder = true
                     } label: {
@@ -129,7 +129,7 @@ struct AddEntryView: View {
                         dismiss()
                     }
                 }
-                
+
                 ToolbarItem(placement: .confirmationAction) {
                     Button("Save") {
                         saveEntry()
@@ -142,7 +142,7 @@ struct AddEntryView: View {
             }
         }
     }
-    
+
     private func saveEntry() {
         let entry = DiaryEntry(
             title: title,

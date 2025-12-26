@@ -10,7 +10,7 @@ import SwiftUI
 struct EntriesListView: View {
     @Environment(DiaryStore.self) private var store
     @State private var showingAddEntry = false
-    
+
     var body: some View {
         NavigationStack {
             List {
@@ -43,7 +43,7 @@ struct EntriesListView: View {
             }
         }
     }
-    
+
     private func deleteEntries(at offsets: IndexSet) {
         for index in offsets {
             let entry = store.sortedEntries[index]
@@ -54,7 +54,7 @@ struct EntriesListView: View {
 
 struct EntryRowView: View {
     let entry: DiaryEntry
-    
+
     var body: some View {
         VStack(alignment: .leading, spacing: 4) {
             HStack {
@@ -76,12 +76,12 @@ struct EntryRowView: View {
                         .font(.title3)
                 }
             }
-            
+
             Text(entry.content)
                 .font(.subheadline)
                 .foregroundStyle(.secondary)
                 .lineLimit(2)
-            
+
             Text(entry.date.formatted(date: .abbreviated, time: .shortened))
                 .font(.caption)
                 .foregroundStyle(.tertiary)

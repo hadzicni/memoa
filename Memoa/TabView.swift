@@ -9,7 +9,7 @@ import SwiftUI
 
 struct MainTabView: View {
     @AppStorage("appearanceMode") private var appearanceMode: AppearanceMode = .system
-    
+
     var body: some View {
         SwiftUI.TabView {
             SwiftUI.Tab("Entries", systemImage: "book.fill") {
@@ -23,7 +23,7 @@ struct MainTabView: View {
             SwiftUI.Tab("Search", systemImage: "magnifyingglass", role: .search) {
                 SearchView()
             }
-            
+
             SwiftUI.Tab("Settings", systemImage: "gearshape.fill") {
                 SettingsView()
             }

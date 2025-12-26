@@ -11,7 +11,7 @@ enum AppearanceMode: String, CaseIterable {
     case system = "System"
     case light = "Light"
     case dark = "Dark"
-    
+
     var colorScheme: ColorScheme? {
         switch self {
         case .system: return nil
@@ -24,7 +24,7 @@ enum AppearanceMode: String, CaseIterable {
 struct SettingsView: View {
     @AppStorage("appearanceMode") private var appearanceMode: AppearanceMode = .system
     @Environment(DiaryStore.self) private var store
-    
+
     var body: some View {
         NavigationStack {
             Form {
@@ -36,7 +36,7 @@ struct SettingsView: View {
                     }
                     .pickerStyle(.segmented)
                 }
-                
+
                 Section("Statistics") {
                     HStack {
                         Text("Total Entries")
@@ -44,7 +44,7 @@ struct SettingsView: View {
                         Text("\(store.entries.count)")
                             .foregroundStyle(.secondary)
                     }
-                    
+
                     HStack {
                         Text("Most Common Mood")
                         Spacer()
@@ -60,13 +60,13 @@ struct SettingsView: View {
                         }
                     }
                 }
-                
+
                 Section("Data") {
                     Button("Export Entries", systemImage: "square.and.arrow.up") {
                         // Future: Export functionality
                     }
                 }
-                
+
                 Section {
                     HStack {
                         Text("Version")
@@ -79,13 +79,13 @@ struct SettingsView: View {
             .navigationTitle("Settings")
         }
     }
-    
+
     private var mostCommonMood: DiaryEntry.Mood? {
         guard !store.entries.isEmpty else { return nil }
-        
+
         let moodCounts = Dictionary(grouping: store.entries, by: { $0.mood })
             .mapValues { $0.count }
-        
+
         return moodCounts.max(by: { $0.value < $1.value })?.key
     }
 }

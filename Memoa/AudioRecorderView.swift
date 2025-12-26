@@ -10,30 +10,30 @@ import SwiftUI
 struct AudioRecorderView: View {
     @Environment(\.dismiss) private var dismiss
     @Bindable var audioRecorder: AudioRecorder
-    
+
     var body: some View {
         NavigationStack {
             VStack(spacing: 40) {
                 Spacer()
-                
+
                 // Recording indicator
                 ZStack {
                     Circle()
                         .fill(audioRecorder.isRecording ? Color.red.opacity(0.2) : Color.gray.opacity(0.2))
                         .frame(width: 200, height: 200)
-                    
+
                     Image(systemName: "waveform")
                         .font(.system(size: 80))
                         .foregroundStyle(audioRecorder.isRecording ? .red : .gray)
                 }
-                
+
                 // Timer
                 Text(formatTime(audioRecorder.recordingTime))
                     .font(.system(size: 48, weight: .light, design: .monospaced))
                     .foregroundStyle(audioRecorder.isRecording ? .red : .primary)
-                
+
                 Spacer()
-                
+
                 // Controls
                 HStack(spacing: 60) {
                     if audioRecorder.audioData != nil {
@@ -49,7 +49,7 @@ struct AudioRecorderView: View {
                             .foregroundStyle(.red)
                         }
                     }
-                    
+
                     Button {
                         if audioRecorder.isRecording {
                             audioRecorder.stopRecording()
@@ -61,7 +61,7 @@ struct AudioRecorderView: View {
                             Circle()
                                 .fill(audioRecorder.isRecording ? .red : .blue)
                                 .frame(width: 80, height: 80)
-                            
+
                             if audioRecorder.isRecording {
                                 RoundedRectangle(cornerRadius: 8)
                                     .fill(.white)
@@ -73,7 +73,7 @@ struct AudioRecorderView: View {
                             }
                         }
                     }
-                    
+
                     if audioRecorder.audioData != nil {
                         Button {
                             dismiss()
@@ -105,7 +105,7 @@ struct AudioRecorderView: View {
             }
         }
     }
-    
+
     private func formatTime(_ time: TimeInterval) -> String {
         let minutes = Int(time) / 60
         let seconds = Int(time) % 60
